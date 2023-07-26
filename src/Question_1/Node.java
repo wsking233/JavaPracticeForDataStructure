@@ -11,7 +11,7 @@ package Question_1;
  */
 
 
-public class Node <E                 > {
+public class Node <E> {
     
     E data;
     Node <E> next;
