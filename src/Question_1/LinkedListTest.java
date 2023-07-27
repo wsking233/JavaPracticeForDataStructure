@@ -305,6 +305,7 @@ public class LinkedListTest {
         list.printLinkedList();
         
         list.removeFromTail();
+//        list.removeFromHead();
         System.out.println();
         list.printLinkedList();
         Node<String> node = new Node<>();

@@ -27,6 +27,9 @@ public class Node <E> {
     }
     
     public String toString(){
-        return "Data: " + data + " ";
+        if(next != null){
+            return data + " -> ";
+        }
+        return data+"";
     }
 }

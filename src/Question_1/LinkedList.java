@@ -66,13 +66,14 @@ public class LinkedList <E extends Comparable>{
         int index = 1;
         Node<E> currentNode = head;
         System.out.println("The linked list:");
-        System.out.println(index +". "+head.toString());
+        System.out.print(head.toString());
         
         while(currentNode.next != null){
             index++;
             currentNode = currentNode.next;
-            System.out.println(index + ". " + currentNode.toString());
+            System.out.print(currentNode.toString());
         }
+        System.out.println();
     }
     
     private void printLinkedList(Node node)
@@ -103,18 +104,20 @@ public class LinkedList <E extends Comparable>{
     
     public void remove(Node node)
     {
-        
-        if(head.data == node.data){ //if delete first node
+        //if delete first node
+        if(head.data == node.data){ 
             head = head.next;
+            size --;
             return;
-        }
-
+        }        
+        
         Node<E> nodeA = head;   //one position before the target node
         Node<E> nodeB = null;   //the target node
            
         //find the target node.
         while(nodeA.next != null){ 
            if(nodeA.next.data.equals(node.data)){
+               
                nodeB = nodeA.next;
                break;
            }
@@ -129,7 +132,7 @@ public class LinkedList <E extends Comparable>{
             if(nodeB.next == null){
                 nodeA.next = null;
             }else{
-                nodeA.next = nodeB.next.next;
+                nodeA.next = nodeB.next;
             }
             size--;
         }
@@ -139,8 +142,21 @@ public class LinkedList <E extends Comparable>{
     
     public void remove(int position)
     {
+        if(position > size){
+            System.out.println(position + " is out of range");
+            return;
+        }
+        if(position == 0){
+            head = head.next;
+            return;
+        }
         
-        
+        Node<E> currentNode = head;
+        for(int i = 0; i < position - 1; i++){
+            currentNode = currentNode.next;
+        }
+        currentNode.next = currentNode.next.next;
+        size--;
     }
     
     private void removeByIndex(Node head, int position)
@@ -155,12 +171,19 @@ public class LinkedList <E extends Comparable>{
     
     public Node removeFromHead()
     {
+        size--;
         return  head = head.next;
     }
     
     public Node removeFromTail()
     {
-        return null;
+        Node<E> currentNode = head;
+        while(currentNode.next.next != null){
+           currentNode = currentNode.next;
+        }
+        currentNode.next = null;
+        size--;
+        return currentNode;
     }
     
     private Node removeFromTail(Node node)
