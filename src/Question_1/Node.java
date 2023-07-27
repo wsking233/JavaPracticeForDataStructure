@@ -25,4 +25,8 @@ public class Node <E> {
     {
         return 0;
     }
+    
+    public String toString(){
+        return "Data: " + data + " ";
+    }
 }
