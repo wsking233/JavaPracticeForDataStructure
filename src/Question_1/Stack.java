@@ -14,17 +14,24 @@ public class Stack <E extends Comparable>{
     
     public void push(E data)
     {
-        
+        stack.addHead(data);
     }
     
     public E pop()
     {
-        return null;
+        if(stack.size <= 1){
+            return stack.head.data;
+        }
+        
+        Node<E> node = stack.head;
+        stack.head = stack.head.next;
+       
+        return node.data;
     }
     
     public void printStack()
     {
-        
+        stack.printLinkedList();
     }
     
     public int getSize()

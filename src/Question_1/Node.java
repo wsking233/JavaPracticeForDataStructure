@@ -16,6 +16,15 @@ public class Node <E> {
     E data;
     Node <E> next;
     
+    public Node(){
+        
+    }
+    
+    public Node(E data){
+        this.data = data;
+    }
+   
+    
     public boolean equals(Node node)
     {
         return false;

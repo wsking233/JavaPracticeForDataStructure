@@ -15,21 +15,26 @@ public class Queue <E extends Comparable>{
     
     public void enqueue(E data)
     {
-        
+        queue.add(data);    
     }
     
     public E dequeue()
     {
-        return null;
+        Node<E> node = queue.removeFromHead();
+        if(node == null){
+            return queue.head.data;
+        }
+         
+        return node.data;
     }
     
     public void printQueue()
     {
-        
+        queue.printLinkedList();
     }
     
     public int getSize()
     {
-        return 0;
+        return queue.size;
     }
 }

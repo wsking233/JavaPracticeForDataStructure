@@ -5,6 +5,8 @@
  */
 package Question_1;
 
+import java.util.Arrays;
+
 /**
  *
  * @author xhu
@@ -21,7 +23,29 @@ public class DataAnalysis <E extends Comparable>{
     
     public boolean isPalindrome()
     {
-
-        return false;
+        Queue rData = reverse(data);
+        
+//        for (E data1 : data) {
+//            if (!data1.equals(rData.dequeue())) {
+//                System.out.println(Arrays.toString(data) + " is not palindrome");
+//                return false;
+//            }
+//        }
+       
+        return true;
     }
+    
+    public Queue reverse(E[] data){
+        Stack<E> inOrder = new Stack();
+        for (E e : data) {
+            inOrder.push(e);
+        }
+        Queue<E> outOrder = new Queue();
+        while(inOrder.getSize() > 0){
+            outOrder.enqueue(inOrder.pop());
+            
+            System.out.println(inOrder.getSize());
+        }
+        return outOrder;
+    } 
 }

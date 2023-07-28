@@ -16,9 +16,17 @@ public class LinkedList <E extends Comparable>{
     
     public void addHead(E data)
     {
-        Node<E> newHead = new Node<E>();
-        newHead.data = data;
-        newHead.next = head;
+        Node<E> newNode = new Node(data);
+//        System.out.println("add: "+newNode.toString());
+        if(head == null){
+            head = newNode;
+        }else{
+            Node<E> currentNode = head;
+            head = newNode;
+            head.next = currentNode;
+        }
+        size++;
+       
     }
     
     public Node getHead()
@@ -36,8 +44,8 @@ public class LinkedList <E extends Comparable>{
     
     public void add(E data)
     {
-       Node<E> newNode = new Node<>();
-       newNode.data = data;
+       Node<E> newNode = new Node(data);
+//       newNode.data = data;
        if(head == null){
            head = newNode;
        }else{
@@ -171,8 +179,22 @@ public class LinkedList <E extends Comparable>{
     
     public Node removeFromHead()
     {
+        if(head == null){
+            size = 0;
+            return null;
+        }
+       
+        Node<E> currentNode = head;
+        if(head != null && head.next ==null){
+            head = null;
+            size --;
+            return currentNode;
+        }
+
+        head = head.next;
         size--;
-        return  head = head.next;
+        
+        return  currentNode;
     }
     
     public Node removeFromTail()
@@ -193,15 +215,17 @@ public class LinkedList <E extends Comparable>{
     
     public void addInOrder(E data)
     {
-        Node<E> newNode = new Node<>();
-       newNode.data = data;
-       if(head == null){
+       Node<E> newNode = new Node<>(data);
+       
+       if(head == null || data.compareTo(head.data)<=0){
+           newNode.next = head;
            head = newNode;
        }else{
            Node<E> currentNode = head;
-          while(currentNode.next != null){
+          while(currentNode.next != null && data.compareTo(currentNode.next.data)> 0){
               currentNode = currentNode.next;
           }
+          newNode.next = currentNode.next;
           currentNode.next = newNode;
        }
        size++;

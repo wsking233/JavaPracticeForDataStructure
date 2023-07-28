@@ -304,12 +304,12 @@ public class LinkedListTest {
         list.add("20");
         list.printLinkedList();
         
-        list.removeFromTail();
-//        list.removeFromHead();
+//        list.removeFromTail();
+        list.removeFromHead();
         System.out.println();
         list.printLinkedList();
         Node<String> node = new Node<>();
-        node.data = "20";
+        node.data = "10";
         if(list.size == 1 && !list.contains(node))
         {
             mark = 2;
@@ -363,8 +363,12 @@ public class LinkedListTest {
         for(int i = 0; i < word.length(); i++)
         {
             queue.enqueue((Character)word.charAt(i));
+            System.out.print(word.charAt(i));
         }
+        System.out.println();
+        queue.printQueue();
         String output = "";
+        System.out.println("Output:");
         for(int i = 0; i < word.length(); i++)
         {
             Character char_from_queue = queue.dequeue();
@@ -375,9 +379,11 @@ public class LinkedListTest {
             }
             else
             {
+                System.out.print(char_from_queue);
                 output += char_from_queue;
             }
         }
+        System.out.println();
         
         int mark = 0;
         //for(int i = 0; queue.getSize() > 0 && ((Character)queue.dequeue()).equals(word.charAt(i));i++);
