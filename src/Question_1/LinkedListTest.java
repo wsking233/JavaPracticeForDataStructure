@@ -303,7 +303,7 @@ public class LinkedListTest {
         list.add("10");
         list.add("20");
         list.printLinkedList();
-        
+
 //        list.removeFromTail();
         list.removeFromHead();
         System.out.println();
@@ -319,7 +319,6 @@ public class LinkedListTest {
         {
             System.out.println(ANSI_RED+"Failed"+ANSI_RESET);
         }
-        
         
         return mark;
     }
