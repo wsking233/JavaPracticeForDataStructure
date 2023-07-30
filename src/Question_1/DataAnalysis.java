@@ -24,47 +24,32 @@ public class DataAnalysis <E extends Comparable>{
     public boolean isPalindrome()
     {
         Queue<E> rData = reverse(data);
-        System.out.println("Reverse list:");
-        rData.printQueue();
         
-//        for (E data1 : data) {
-//            if (!data1.equals(rData.dequeue())) {
-//                System.out.println(Arrays.toString(data) + " is not palindrome");
-//                return false;
-//            }
-//        }
-//       
-        return false;
+        for (E data1 : data) {
+            if (!data1.equals(rData.dequeue())) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public Queue<E> reverse(E[] data){
-        
-        Node<E> node = new Node("test node");
-        
+                
         Stack<E> inOrder = new Stack();
-        
         for (E e : data) {
             inOrder.push(e);
         }
-        System.out.println("In order:");
+        System.out.println("In order list: ");
         inOrder.printStack();
-        System.out.println("InOrder size: " + inOrder.getSize());
-        
-        Queue<E> outOrder = new Queue();
-//        outOrder.enqueue(node.data);
-    
-         
-        
+
+        Queue<E> outOrder = new Queue();    
         while(inOrder.getSize() > 0){
             E tempdata = inOrder.pop();
-            System.out.print(tempdata + " ");
             outOrder.enqueue(tempdata);
-//            System.out.println(inOrder.getSize());
         }
-        System.out.println();
-        System.out.println("Out Order:");
+        System.out.println("Out order list: ");
         outOrder.printQueue();
-      
+        
         return outOrder;
     } 
 }

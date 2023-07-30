@@ -19,14 +19,10 @@ public class Stack <E extends Comparable>{
     
     public E pop()
     {
-        if(stack.size <= 1){
-            return stack.head.data;
-        }
-        
-        Node<E> node = stack.head;
-        stack.head = stack.head.next;
+
+        Node<E> removeData = stack.removeFromHead();
+        return removeData.data;
        
-        return node.data;
     }
     
     public void printStack()
