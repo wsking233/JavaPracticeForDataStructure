@@ -28,14 +28,19 @@ public class MethodsTest {
 //        test.add(56);
 //        test.addHead(18);
 //        test.printLinkedList();
-        test.remove(2);
-        test.printLinkedList();
-        System.out.println("Size: " + test.size);
-        test.removeFromHead();
-        test.printLinkedList();
         System.out.println("Size: " + test.size);
 
-        
+        test.remove(10);
+        test.printLinkedList();
+        System.out.println("Size: " + test.size);
+        test.removeFromTail();
+         test.printLinkedList();
+        System.out.println("Size: " + test.size);
+
+//        test.removeFromHead();
+//        test.printLinkedList();
+//        System.out.println("Size: " + test.size);
+        System.out.println(test.getNode(5).toString());
         
     }
 }

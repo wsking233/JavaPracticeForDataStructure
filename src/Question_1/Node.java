@@ -8,37 +8,42 @@ package Question_1;
 /**
  *
  * @author xhu
+ * @param <E>
  */
+public class Node<E> {
 
-
-public class Node <E> {
-    
     E data;
-    Node <E> next;
-    
-    public Node(){
-        
+    Node<E> next;
+
+    public Node() {
+
     }
-    
-    public Node(E data){
+
+    public Node(E data) {
         this.data = data;
     }
-   
-    
-    public boolean equals(Node node)
-    {
-        return false;
+
+    public boolean equals(Node node) {
+        if (this.data == node.data) {
+            return true;
+        }
+        if (node == null || node.data.getClass() != this.data.getClass()) {
+            return false;
+        }
+
+        return data.equals(node.data);
     }
-    
-    public int compareTo(Node node)
-    {
+
+    public int compareTo(Node node) {
+//        return data.compareTo(node.data);
         return 0;
     }
-    
-    public String toString(){
-        if(next != null){
+
+    @Override
+    public String toString() {
+        if (next != null) {
             return data + " -> ";
         }
-        return data+"";
+        return data + "";
     }
 }

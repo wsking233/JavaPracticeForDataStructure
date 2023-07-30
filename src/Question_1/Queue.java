@@ -8,10 +8,11 @@ package Question_1;
 /**
  *
  * @author xhu
+ * @param <E>
  */
 public class Queue <E extends Comparable>{
     
-    private LinkedList<E> queue = new LinkedList();
+    private LinkedList<E> queue = new LinkedList<>();
     
     public void enqueue(E data)
     {

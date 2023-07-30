@@ -8,20 +8,37 @@ package Question_1;
 /**
  *
  * @author xhu
+ * @param <E>
  */
 public class LinkedList<E extends Comparable> {
 
     public int size;
     public Node<E> head;
 
-//    private Node<E> currentNode;
     public LinkedList() {
         this.size = 0;
-//        this.currentNode = head;
     }
 
+        public void add(E data) {
+        if (head == null) {
+            this.addHead(data);
+        } else {
+//            Node<E> temp = this.getTail();
+//            temp.next = new Node(data);
+            this.getTail().next = new Node<>(data);
+            size++;
+        }
+
+//           Node<E> newNode = new Node(data);
+//           Node<E> currentNode = head;
+//          while(currentNode.next != null){
+//              currentNode = currentNode.next;
+//          }
+//          currentNode.next = newNode;
+    }
+        
     public void addHead(E data) {
-        Node<E> newNode = new Node(data);
+        Node<E> newNode = new Node<>(data);
 //        System.out.println("add: "+newNode.toString());
         if (head == null) {
             head = newNode;
@@ -38,10 +55,10 @@ public class LinkedList<E extends Comparable> {
     }
 
     public Node getTail() {
+        return this.getTail(head);
 //       while (currentNode.next != null) {
 //            currentNode = currentNode.next;
 //        }
-        return this.getTail(head);
     }
 
     //recusion to get last node
@@ -53,23 +70,7 @@ public class LinkedList<E extends Comparable> {
         }
     }
 
-    public void add(E data) {
-        if (head == null) {
-            this.addHead(data);
-        } else {
-//            Node<E> temp = this.getTail();
-//            temp.next = new Node(data);
-            this.getTail().next = new Node(data);
-            size++;
-        }
 
-//           Node<E> newNode = new Node(data);
-//           Node<E> currentNode = head;
-//          while(currentNode.next != null){
-//              currentNode = currentNode.next;
-//          }
-//          currentNode.next = newNode;
-    }
 
     private void add(Node head, Node node) {
 
@@ -131,39 +132,46 @@ public class LinkedList<E extends Comparable> {
     public void remove(Node node) {
         //if delete first node
         if (head.data == node.data) {
-            head = head.next;
-            size--;
+            this.removeFromHead();
             return;
         }
 
-        Node<E> nodeA = head;   //one position before the target node
-        Node<E> nodeB = null;   //the target node
+        this.removeFromBody(head, node);
 
+//        Node<E> nodeA = head;   //one position before the target node
+//        Node<E> nodeB = null;   //the target node
         //find the target node.
-        while (nodeA.next != null) {
-            if (nodeA.next.data.equals(node.data)) {
-
-                nodeB = nodeA.next;
-                break;
-            }
-            nodeA = nodeA.next;
-        }
+//        while (nodeA.next != null) {
+//            if (nodeA.next.data.equals(node.data)) {
+//
+//                nodeB = nodeA.next;
+//                break;
+//            }
+//            nodeA = nodeA.next;
+//        }
         //if target node is null, it means target is not found in list.
-        if (nodeB == null) {
-            System.out.println(node.data + " is not exist");
-        } else {
-            //A -> C, if the target node is found.
-            if (nodeB.next == null) {
-                nodeA.next = null;
-            } else {
-                nodeA.next = nodeB.next;
-            }
-            size--;
-        }
+//        if (nodeB == null) {
+//            System.out.println(node.data + " is not exist");
+//        } else {
+//            //A -> C, if the target node is found.
+//            if (nodeB.next == null) {
+//                nodeA.next = null;
+//            } else {
+//                nodeA.next = nodeB.next;
+//            }
+//            size--;
+//        }
     }
 
     private void removeFromBody(Node head, Node node) {
-        
+        if (head.next != null) {
+            if (head.next.data.equals(node.data)) {
+                head.next = head.next.next;
+                size--;
+            } else {
+                this.removeFromBody(head.next, node);
+            }
+        }
     }
 
     public void remove(int position) {
@@ -172,7 +180,7 @@ public class LinkedList<E extends Comparable> {
             return;
         }
         if (position == 0) {
-            size --;
+            size--;
             head = head.next;
             return;
         }
@@ -200,11 +208,11 @@ public class LinkedList<E extends Comparable> {
             size = 0;
             return null;
         }
-        
+
         Node<E> temp = head;
-        this.remove(head);
+        this.remove(0);
         return temp;
-        
+
 //        if (head != null && head.next == null) {
 //            head = null;
 //            size--;
@@ -216,13 +224,15 @@ public class LinkedList<E extends Comparable> {
     }
 
     public Node removeFromTail() {
-        Node<E> currentNode = head;
-        while (currentNode.next.next != null) {
-            currentNode = currentNode.next;
-        }
-        currentNode.next = null;
-        size--;
-        return currentNode;
+        Node<E> temp = this.getTail();
+        this.remove(size - 1);
+//        Node<E> currentNode = head;
+//        while (currentNode.next.next != null) {
+//            currentNode = currentNode.next;
+//        }
+//        currentNode.next = null;
+//        size--;
+        return temp;
     }
 
     private Node removeFromTail(Node node) {
@@ -236,6 +246,7 @@ public class LinkedList<E extends Comparable> {
             newNode.next = head;
             head = newNode;
         } else {
+//            this.addInOrder(head, newNode);
             Node<E> currentNode = head;
             while (currentNode.next != null && data.compareTo(currentNode.next.data) > 0) {
                 currentNode = currentNode.next;
@@ -244,11 +255,25 @@ public class LinkedList<E extends Comparable> {
             currentNode.next = newNode;
         }
         size++;
-
     }
 
     private void addInOrder(Node currentNode, Node newNode) {
-
+        if (currentNode.next != null) {
+            if (currentNode.compareTo(newNode) > 0 && currentNode.next.compareTo(newNode) <= 0) {
+                Node temp = currentNode.next;
+                newNode.next = temp;
+                currentNode.next = newNode;
+            } else {
+                this.addInOrder(currentNode.next, newNode);
+            }
+        }
+//          if(currentNode.next != null && currentNode.compareTo(newNode) > 0 && currentNode.next.compareTo(newNode) <= 0){
+//              Node temp = currentNode.next;
+//              currentNode.next = newNode;
+//              newNode.next = temp;
+//          }else{
+//            this.addInOrder(currentNode.next, newNode);  
+//          }
     }
 
     public Node getNode(int index) {
@@ -259,18 +284,21 @@ public class LinkedList<E extends Comparable> {
         if (index == 0) {
             return head;
         } else {
-//            this.getNode(index, head);
-            Node<E> currentNode = head;
-            for (int i = 0; i < size && i < index; i++) {
-                currentNode = currentNode.next;
-            }
-            return currentNode;
+            return this.getNode(index, head);
         }
+//            this.getNode(index, head);
+//            Node<E> currentNode = head;
+//            for (int i = 0; i < size && i < index; i++) {
+//                currentNode = currentNode.next;
+//            }
     }
 
     private Node getNode(int index, Node head) {
-        
-        return null;
+        if (index > 0) {
+            index--;
+            return this.getNode(index, head.next);
+        }
+        return head;
     }
 
     public E getData(int index) {
@@ -279,13 +307,11 @@ public class LinkedList<E extends Comparable> {
             return null;
         }
 
-        Node<E> currentNode = head;
-
-        for (int i = 0; i < index; i++) {
-            currentNode = currentNode.next;
-        }
-
-        return currentNode.data;
+        Node<E> temp = this.getNode(index);
+        return temp.data;
+//        for (int i = 0; i < index; i++) {
+//            currentNode = currentNode.next;
+//        }
     }
 
     private E getData(int index, Node head) {

@@ -8,9 +8,10 @@ package Question_1;
 /**
  *
  * @author xhu
+ * @param <E>
  */
 public class Stack <E extends Comparable>{
-    LinkedList<E> stack = new LinkedList();
+    LinkedList<E> stack = new LinkedList<>();
     
     public void push(E data)
     {

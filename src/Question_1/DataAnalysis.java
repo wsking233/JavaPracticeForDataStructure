@@ -10,6 +10,7 @@ import java.util.Arrays;
 /**
  *
  * @author xhu
+ * @param <E>
  */
 public class DataAnalysis <E extends Comparable>{
     private Queue <E> queue = new Queue();
