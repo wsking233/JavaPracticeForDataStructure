@@ -11,8 +11,12 @@ package Question_1;
  */
 public class LinkedList <E extends Comparable>{
     
-    public int size = 0;
+    public int size;
     public Node<E> head;
+    
+    public LinkedList(){
+        this.size = 0;
+    }
     
     public void addHead(E data)
     {

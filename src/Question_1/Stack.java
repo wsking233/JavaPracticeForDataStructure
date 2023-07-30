@@ -36,6 +36,6 @@ public class Stack <E extends Comparable>{
     
     public int getSize()
     {
-        return 0;
+        return stack.size;
     }
 }
