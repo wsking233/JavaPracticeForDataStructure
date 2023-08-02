@@ -482,10 +482,19 @@ public class LinkedListTest {
         LinkedList<String> string_list = new LinkedList<>();
         int mark = 0;
         string_list.addInOrder("ABC");
+        System.out.println("Add: ABC");
+        string_list.printLinkedList();
         string_list.addInOrder("ABA");
-        string_list.addInOrder("BBB");
-        string_list.addInOrder("ABB");
+        System.out.println("Add: ABA");
+        string_list.printLinkedList();
         
+        string_list.addInOrder("BBB");
+        System.out.println("Add: BBB");
+        string_list.printLinkedList();
+        
+        string_list.addInOrder("ABB");
+        System.out.println("Add: ABB");
+        string_list.printLinkedList();
         System.out.println("List: ");
         string_list.printLinkedList();
         

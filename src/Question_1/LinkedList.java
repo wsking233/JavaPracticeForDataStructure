@@ -10,7 +10,7 @@ package Question_1;
  * @author xhu
  * @param <E>
  */
-public class LinkedList<E extends Comparable> {
+public class LinkedList<E extends Comparable<E>>{
 
     public int size;
     public Node<E> head;
@@ -242,38 +242,30 @@ public class LinkedList<E extends Comparable> {
     public void addInOrder(E data) {
         Node<E> newNode = new Node<>(data);
 
+        
         if (head == null || data.compareTo(head.data) <= 0) {
             newNode.next = head;
             head = newNode;
         } else {
+            this.addInOrder(head, newNode);
 //            this.addInOrder(head, newNode);
-            Node<E> currentNode = head;
-            while (currentNode.next != null && data.compareTo(currentNode.next.data) > 0) {
-                currentNode = currentNode.next;
-            }
-            newNode.next = currentNode.next;
-            currentNode.next = newNode;
+//            Node<E> currentNode = head;
+//            while (currentNode.next != null && data.compareTo(currentNode.next.data) > 0) {
+//                currentNode = currentNode.next;
+//            }
+//            newNode.next = currentNode.next;
+//            currentNode.next = newNode;
         }
         size++;
     }
 
     private void addInOrder(Node currentNode, Node newNode) {
-        if (currentNode.next != null) {
-            if (currentNode.compareTo(newNode) > 0 && currentNode.next.compareTo(newNode) <= 0) {
-                Node temp = currentNode.next;
-                newNode.next = temp;
-                currentNode.next = newNode;
-            } else {
-                this.addInOrder(currentNode.next, newNode);
-            }
-        }
-//          if(currentNode.next != null && currentNode.compareTo(newNode) > 0 && currentNode.next.compareTo(newNode) <= 0){
-//              Node temp = currentNode.next;
-//              currentNode.next = newNode;
-//              newNode.next = temp;
-//          }else{
-//            this.addInOrder(currentNode.next, newNode);  
-//          }
+           if(currentNode == null || newNode.data.compareTo(currentNode.data) >=0){
+               newNode.next = currentNode;
+               currentNode = newNode;
+           }else{
+           }
+         this.addInOrder(currentNode.next, newNode);
     }
 
     public Node getNode(int index) {

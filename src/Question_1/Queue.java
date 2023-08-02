@@ -10,7 +10,7 @@ package Question_1;
  * @author xhu
  * @param <E>
  */
-public class Queue <E extends Comparable>{
+public class Queue <E extends Comparable<E>>{
     
     private LinkedList<E> queue = new LinkedList<>();
     

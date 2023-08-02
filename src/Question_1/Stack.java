@@ -10,7 +10,7 @@ package Question_1;
  * @author xhu
  * @param <E>
  */
-public class Stack <E extends Comparable>{
+public class Stack <E extends Comparable<E>>{
     LinkedList<E> stack = new LinkedList<>();
     
     public void push(E data)

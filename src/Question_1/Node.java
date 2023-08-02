@@ -10,7 +10,7 @@ package Question_1;
  * @author xhu
  * @param <E>
  */
-public class Node<E> {
+public class Node<E extends Comparable> {
 
     E data;
     Node<E> next;
@@ -23,20 +23,17 @@ public class Node<E> {
         this.data = data;
     }
 
-    public boolean equals(Node node) {
-        if (this.data == node.data) {
-            return true;
-        }
-        if (node == null || node.data.getClass() != this.data.getClass()) {
+    public boolean equals(Node<E> node) {
+        if (this.data == null) {
             return false;
         }
 
         return data.equals(node.data);
     }
 
-    public int compareTo(Node node) {
-//        return data.compareTo(node.data);
-        return 0;
+    public int compareTo(Node<E> node) {
+        return data.compareTo(node.data);
+//        return 0;
     }
 
     @Override
