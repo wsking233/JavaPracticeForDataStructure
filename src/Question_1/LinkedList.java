@@ -242,23 +242,21 @@ public class LinkedList<E extends Comparable<E>>{
     public void addInOrder(E data) {
         Node<E> newNode = new Node<>(data);
 
-        
         if (head == null || data.compareTo(head.data) <= 0) {
             newNode.next = head;
             head = newNode;
         } else {
-            this.addInOrder(head, newNode);
-//            this.addInOrder(head, newNode);
-//            Node<E> currentNode = head;
-//            while (currentNode.next != null && data.compareTo(currentNode.next.data) > 0) {
-//                currentNode = currentNode.next;
-//            }
-//            newNode.next = currentNode.next;
-//            currentNode.next = newNode;
+            Node<E> currentNode = head;
+            while (currentNode.next != null && data.compareTo(currentNode.next.data) > 0) {
+                currentNode = currentNode.next;
+            }
+            newNode.next = currentNode.next;
+            currentNode.next = newNode;
         }
         size++;
     }
 
+    //not completed yet
     private void addInOrder(Node currentNode, Node newNode) {
            if(currentNode == null || newNode.data.compareTo(currentNode.data) >=0){
                newNode.next = currentNode;
