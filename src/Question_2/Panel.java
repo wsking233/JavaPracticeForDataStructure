@@ -5,9 +5,11 @@
  */
 package Question_2;
 
+import Question_1.LinkedList;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import javax.swing.JPanel;
 
 /**
@@ -15,12 +17,27 @@ import javax.swing.JPanel;
  * @author xhu
  */
 public class Panel extends JPanel implements KeyListener{
+    
+    
+    private LinkedList<Integer> numbers;
+    private char food;
+
 
     public Panel()
     {
         this.addKeyListener(this);     
         this.setFocusable(true);         
+        numbers = new LinkedList<>();
+        food = 'c';
     }
+    
+    public void newNumbers(){
+       while(numbers.size <= 10){
+           numbers.add((int) (Math.random() * 10));
+       }
+    }
+   
+    
     
     
     public void paint(Graphics g)
