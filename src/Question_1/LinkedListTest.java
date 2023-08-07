@@ -517,6 +517,7 @@ public class LinkedListTest {
         int_list.addInOrder(0);
         int_list.addInOrder(1);
         int_list.addInOrder(12);
+
         
         System.out.println("List: ");
         int_list.printLinkedList();

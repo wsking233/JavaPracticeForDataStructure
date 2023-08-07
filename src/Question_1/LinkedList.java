@@ -246,7 +246,7 @@ public class LinkedList<E extends Comparable<E>>{
             newNode.next = head;
             head = newNode;
         } else {
-            this.addInOrder(newNode, newNode);
+            this.addInOrder(head, newNode);
 //            Node<E> currentNode = head;
 //            while (currentNode.next != null && data.compareTo(currentNode.next.data) > 0) {
 //                currentNode = currentNode.next;
@@ -259,12 +259,14 @@ public class LinkedList<E extends Comparable<E>>{
 
     //not completed yet
     private void addInOrder(Node currentNode, Node newNode) {
-           if(currentNode == null || newNode.compareTo(currentNode) <=0){
-               newNode.next = currentNode;
-               currentNode = newNode;
-           }else{
+        
+        
+        if(currentNode.next != null && newNode.compareTo(currentNode.next) >0){
             this.addInOrder(currentNode.next, newNode);
-           }
+        }else{
+             newNode.next = currentNode.next;
+            currentNode.next = newNode;
+        }
     }
 
     public Node getNode(int index) {
