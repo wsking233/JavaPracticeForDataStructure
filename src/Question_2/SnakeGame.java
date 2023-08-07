@@ -21,7 +21,7 @@ public class SnakeGame {
         JFrame frame = new JFrame("Snake");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel panel = new Panel();
-        
+            
         frame.getContentPane().add(panel);
         frame.setSize(1000, 1000);
         frame.setVisible(true);
