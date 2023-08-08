@@ -36,15 +36,18 @@ public class Panel extends JPanel implements KeyListener{
            numbers.add((int) (Math.random() * 10));
        }
     }
+    
+    public int randomX(){
+       return 0;
+    }
    
-    
-    
-    
     public void paint(Graphics g)
     {
         paintComponent(g);
         
         //put your rendering code here
+        g.drawString(String.valueOf(food), 100, 100);
+        
 
         repaint();
     }
