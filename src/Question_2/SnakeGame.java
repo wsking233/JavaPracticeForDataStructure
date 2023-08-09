@@ -5,6 +5,7 @@
  */
 package Question_2;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
@@ -21,10 +22,13 @@ public class SnakeGame {
         JFrame frame = new JFrame("Snake");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel panel = new Panel();
-            
-        frame.getContentPane().add(panel);
+        frame.add(panel);
+//        frame.getContentPane().add(panel);
         frame.setSize(1000, 1000);
         frame.setVisible(true);
+        
+        panel.setSize(frame.getWidth()-10, frame.getHeight()-10);
+        panel.setBackground(Color.LIGHT_GRAY);
     }
     
 }

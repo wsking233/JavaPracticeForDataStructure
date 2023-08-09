@@ -12,15 +12,19 @@ import Question_1.LinkedList;
  */
 public class Snake {
     
-    private LinkedList<Character> snak;
+    private LinkedList<Character> snake;
     private int headX;
     private int headY;
     
     public Snake(String init_snake, int x, int y)
     {
-        this.snak = new LinkedList<>();
+        this.snake = new LinkedList<>();
         this.headX = x;
         this.headY = y;
+        
+       for(char c: init_snake.toCharArray()){
+           this.eat(c);
+       }
     }       
 
     public void run()
@@ -40,7 +44,7 @@ public class Snake {
         }
     }
     
-    public LinkedList<Character> getSnak(){
-        return this.snak;
+    public String getSnak(){
+        return this.snake.toString();
     }
 }
