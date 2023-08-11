@@ -38,9 +38,9 @@ public class Node<E extends Comparable> {
 
     @Override
     public String toString() {
-        if (next != null) {
-            return data + " -> ";
-        }
-        return data + "";
+//        if (next != null) {
+//            return data + "";
+//        }
+        return data + " ";
     }
 }

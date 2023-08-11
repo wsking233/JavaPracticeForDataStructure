@@ -23,11 +23,10 @@ public class SnakeGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel panel = new Panel();
         frame.add(panel);
-//        frame.getContentPane().add(panel);
         frame.setSize(1000, 1000);
         frame.setVisible(true);
         
-        panel.setSize(frame.getWidth()-10, frame.getHeight()-10);
+        panel.setSize(frame.getWidth()-100, frame.getHeight()-100);
         panel.setBackground(Color.LIGHT_GRAY);
     }
     

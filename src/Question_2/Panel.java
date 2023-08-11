@@ -29,11 +29,11 @@ public class Panel extends JPanel implements KeyListener{
 
     public Panel()
     {
+        rand = new Random();
         snake = new Snake("@ABC", getRandomX(), getRandomY());
         this.addKeyListener(this);     
         this.setFocusable(true);       
         numbers = new LinkedList<>();
-        rand = new Random();
         food = this.getRandomFood();
         foodx = this.getRandomX();
         foody = this.getRandomY();
@@ -46,15 +46,18 @@ public class Panel extends JPanel implements KeyListener{
     }
     
     public int getRandomX(){
-       return rand.nextInt(1000);
+        int x = rand.nextInt(800);
+       return x;
     }
     
     public int getRandomY(){
-        return rand.nextInt(1000);
+        int y = rand.nextInt(800);
+        return y;
     }
     
     public char getRandomFood(){
-        if(rand.nextInt(10) <=5){
+             
+       if(rand.nextInt(10) <=5){
             return (char)(rand.nextInt(26)+'A');
         }else{
             return (char)(rand.nextInt(26)+'a');
@@ -64,10 +67,11 @@ public class Panel extends JPanel implements KeyListener{
     public void paint(Graphics g)
     {
         paintComponent(g);
-        
+//        g.drawString(String.valueOf(this.getRandomFood()), foodx, foody);
+        g.drawString(snake.getSnak(), foodx, foody);
         //put your rendering code here
 //        g.drawString(String.valueOf(food), foodx, foody);
-        g.drawString(snake.getSnak(), foodx, foody);
+//        g.drawString(snake.getSnak(), foodx, foody);
         
 
         repaint();
@@ -82,23 +86,24 @@ public class Panel extends JPanel implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        //example code of getting the pressed key
-//        System.out.println("\""+ke.getKeyChar()+"\" is typed.");
-        // Write your code here to control your snake
         System.out.println("\""+ke.getKeyCode()+"\" is typed.");
       switch(ke.getExtendedKeyCode()){
+          case 87:
           case 38:
               System.out.println("Up is typed");
               foody--;
               break;
+          case 83:
           case 40:
               System.out.println("Down is typed");
               foody++;
               break;
+          case 65:
           case 37:
               System.out.println("Left is typed");
               foodx--;
               break;
+          case 68:
           case 39:
               System.out.println("Right is typed");
               foodx++;

@@ -40,7 +40,13 @@ public class MethodsTest {
 //        test.removeFromHead();
 //        test.printLinkedList();
 //        System.out.println("Size: " + test.size);
-        System.out.println(test.getNode(5).toString());
-        
+//        System.out.println(test.getNode(5).toString());
+//        int i = 10;
+//        while(i > 10){
+//            test.add(i);
+//        }
+//        System.out.println("toString test:");
+//        System.out.println(test.toString());
+//        
     }
 }
