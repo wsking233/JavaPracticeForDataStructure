@@ -6,6 +6,8 @@
 package Question_2;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 /**
@@ -19,15 +21,31 @@ public class SnakeGame {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        //init game frame
         JFrame frame = new JFrame("Snake");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Panel panel = new Panel();
-        frame.add(panel);
-        frame.setSize(1000, 1000);
-        frame.setVisible(true);
+        frame.setSize(800, 800);
+        frame.setBackground(Color.BLACK);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         
-        panel.setSize(frame.getWidth()-100, frame.getHeight()-100);
-        panel.setBackground(Color.LIGHT_GRAY);
+        //init game panel
+        Panel panel = new Panel();
+        panel.setPreferredSize(new Dimension(800, 800));
+        panel.setBackground(Color.gray);
+        panel.setFocusable(true);
+        panel.requestFocusInWindow();
+
+        //add panel to frame
+        frame.add(panel);
+        frame.addKeyListener(panel);
+        frame.setVisible(true);
+
+   
+        // Snake snake = new Snake("abcd", 100, 100);
+    
+        // System.out.println(snake.toString());
     }
     
 }

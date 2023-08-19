@@ -5,12 +5,10 @@
  */
 package Question_2;
 
-import Question_1.LinkedList;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
+
 import javax.swing.JPanel;
 
 /**
@@ -20,99 +18,80 @@ import javax.swing.JPanel;
 public class Panel extends JPanel implements KeyListener{
     
     private Snake snake;
-    private LinkedList<Integer> numbers;
-    private Random rand;
     private char food;
     private int foodx;
     private int foody;
+    
 
 
     public Panel()
-    {
-        rand = new Random();
-        snake = new Snake("@ABC", getRandomX(), getRandomY());
-        this.addKeyListener(this);     
-        this.setFocusable(true);       
-        numbers = new LinkedList<>();
-        food = this.getRandomFood();
-        foodx = this.getRandomX();
-        foody = this.getRandomY();
+    {    
+        //init snake
+        this.snake = new Snake("@abcd", 100, 100);
+        this.food = 'e';
+        this.foodx = 200;
+        this.foody = 200;
+
     }
     
-    public void newNumbers(){
-       while(numbers.size <= 10){
-           numbers.add((int) (Math.random() * 10));
-       }
+    public void start(){
+        //start the game
+
     }
-    
-    public int getRandomX(){
-        int x = rand.nextInt(800);
-       return x;
-    }
-    
-    public int getRandomY(){
-        int y = rand.nextInt(800);
-        return y;
-    }
-    
-    public char getRandomFood(){
-             
-       if(rand.nextInt(10) <=5){
-            return (char)(rand.nextInt(26)+'A');
-        }else{
-            return (char)(rand.nextInt(26)+'a');
-        }
-    }
-   
+
     public void paint(Graphics g)
     {
         paintComponent(g);
-//        g.drawString(String.valueOf(this.getRandomFood()), foodx, foody);
-        g.drawString(snake.getSnak(), foodx, foody);
-        //put your rendering code here
-//        g.drawString(String.valueOf(food), foodx, foody);
-//        g.drawString(snake.getSnak(), foodx, foody);
-        
+
+        //draw each body of the snake
+        SnakeBody body = this.snake.getHead();
+        while(body != null){
+            g.drawString(body.toString(), body.getX(), body.getY());
+            body = body.getNext();
+        }          
 
         repaint();
     }
 
+    public void draw(Graphics g){
+        //draw the snake
+    }
+
 
     @Override
-    public void keyTyped(KeyEvent ke) {
-        
-
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
-        System.out.println("\""+ke.getKeyCode()+"\" is typed.");
-      switch(ke.getExtendedKeyCode()){
-          case 87:
-          case 38:
-              System.out.println("Up is typed");
-              foody--;
-              break;
-          case 83:
-          case 40:
-              System.out.println("Down is typed");
-              foody++;
-              break;
-          case 65:
-          case 37:
-              System.out.println("Left is typed");
-              foodx--;
-              break;
-          case 68:
-          case 39:
-              System.out.println("Right is typed");
-              foodx++;
-              break;
-      }
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+        // System.out.println(e.getKeyCode());
+        switch(e.getKeyCode()){
+            case 37: //left
+                // System.out.println("left");
+                this.snake.setDircetion(1);
+                break;
+            case 38: //up
+                // System.out.println("up");
+                this.snake.setDircetion(2);
+                break;
+            case 39: //right
+                // System.out.println("right");
+                this.snake.setDircetion(0);
+                break;
+            case 40: //down
+                // System.out.println("down");
+                this.snake.setDircetion(3);
+                break;
+        }
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
-
-    }    
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+    }
 }
