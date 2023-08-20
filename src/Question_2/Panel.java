@@ -29,7 +29,7 @@ public class Panel extends JPanel implements KeyListener{
         this.snake = new Snake("@abcd", 100, 100);
         this.food = randomFood();
         this.numbers = new SnakeBody[10];
-        randomNumbers();
+//        randomNumbers();
     }
     
     public void start(){
