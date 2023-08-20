@@ -20,6 +20,10 @@ public class SnakeBody {
     private int x;
     private int y;
 
+    public SnakeBody(char body){
+        this.body = body;
+    }
+
     public SnakeBody(char body, int x, int y) {
         this.body = body;
         this.x = x;

@@ -18,9 +18,8 @@ import javax.swing.JPanel;
 public class Panel extends JPanel implements KeyListener{
     
     private Snake snake;
-    private char food;
-    private int foodx;
-    private int foody;
+    private SnakeBody food;
+    private int[] numbers;
     
 
 
@@ -28,10 +27,9 @@ public class Panel extends JPanel implements KeyListener{
     {    
         //init snake
         this.snake = new Snake("@abcd", 100, 100);
-        this.food = 'e';
-        this.foodx = 200;
-        this.foody = 200;
-
+        this.food = randomFood();
+        this.numbers = new int[10];
+        randomNumbers();
     }
     
     public void start(){
@@ -44,52 +42,83 @@ public class Panel extends JPanel implements KeyListener{
         paintComponent(g);
 
         //draw the snake
-        SnakeBody body = this.snake.getHead();
-        while(body != null){
-            g.drawString(String.valueOf(body.getBody()), body.getX(), body.getY());
+        drawSnake(g);
+        // g.drawString(snake.getHead().getNext().toString(), snake.getHead().getNext().getX() , snake.getHead().getNext().getY());
+        //draw the food
+        g.drawString(String.valueOf(food.getBody()), food.getX(), food.getY());
 
-            body = body.getNext();
-        }
-
-        g.drawRect(snake.getHead().getX(), snake.getHead().getY(), 10, 10);
-
-        g.drawString(String.valueOf(this.food), this.foodx, this.foody);
+        //draw the numbers
+        drawNumbers(g);
+        // g.drawString(String.valueOf(this.numbers[0]), RandomUtils.getRandomX(), RandomUtils.getRandomY());
 
         //HUI: score and snake body info
-        g.drawString("Score: " + String.valueOf(snake.getScore()), 700, 50);
-        g.drawString(snake.toString(), 100, 700);
+        drawHUI(g);
 
         snake.run();
-        updateUI();
+        repaint();
     }
 
-    public void drawSnakeBody(Graphics g){
-        //put each snake body into a reactangle
-        SnakeBody body = this.snake.getHead();
-        while(body != null){
-            g.drawRect(body.getX(), body.getY(), 10, 10);
+    public void drawNumbers(Graphics g){
+        //draw the numbers
+       if(numbers.length < 10){
+           for(int i = 0; i < 10; i++){
+               g.drawString(String.valueOf(this.numbers[i]), RandomUtils.getRandomX(), RandomUtils.getRandomY());
+           }
+       }
+    }
 
+    public void drawSnake(Graphics g){
+        //draw each part of the snake body
+        SnakeBody body = this.snake.getHead();
+     
+        while(body != null){
+            g.drawString(String.valueOf(body.getBody()), body.getX(), body.getY());
             body = body.getNext();
         }
-        
-        
     }
 
-    public void randomFood(){
+    public void drawHUI(Graphics g){
+        //draw the score and snake body info
+        g.drawString("Score: " + String.valueOf(snake.getScore()), 700, 50);
+        g.drawString("Snake body:"+snake.toString(), 100, 700);
+    }
+
+    public SnakeBody randomFood(){
         //generate a random food
         // System.out.println("random food: " + this.food);
-        this.food = (char)('a' + (int)(Math.random() * 26));
-        this.foodx = (int)(Math.random() * 80) * 10;
-        this.foody = (int)(Math.random() * 80) * 10;
+        char temp = 'a';
+        if(Math.random() < 0.5){
+            temp = (char)(Math.random() * 26 + 'a');
+        }else{
+            temp = (char)(Math.random() * 26 + 'A');
+        }
+
+        int x = RandomUtils.getRandomX();
+        int y = RandomUtils.getRandomY();
+        SnakeBody body = new SnakeBody(temp, x, y);
+        // body.setNext(null);
+        // body.setPrev(null);
+        this.food = body;
+
+        return body;
+    }
+
+    public void randomNumbers(){
+        //generate a random number
+        // System.out.println("random number: " + this.numbers);
+        this.numbers = new int[10];
+        System.out.print("The numbers are: ");
+        for(int i = 0; i < 10; i++){
+            this.numbers[i] = (int)(Math.random() * 10);
+            System.out.print(numbers[i] + " ");
+        }
     }
 
     public void collisionDectect(){
-
-        //detect collision with food
-        SnakeBody head = this.snake.getHead();
-        if(head.getX() == this.foodx && head.getY() == this.foody){
-            //eat the food
-            this.snake.eat(this.food);
+        //detect if the snake hits the food
+        if(this.snake.getHead().getX() == this.food.getX() && this.snake.getHead().getY() == this.food.getY()){
+            System.out.println("hit food");
+            this.snake.eat(food);
             randomFood();
         }
     }

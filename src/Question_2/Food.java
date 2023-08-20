@@ -14,13 +14,24 @@ public class Food {
     private int x;
     private int y;
 
-    public Food() {
+    public Food(char letter) {
+        this.letter = letter;
         randomPosition();
     }
 
     public void randomPosition() {
-        this.x = RandomUtils.getRandomInt(800);
-        this.y = RandomUtils.getRandomInt(800);
+        this.x = RandomUtils.getRandomInt(700);
+        this.y = RandomUtils.getRandomInt(700);
+    }
+
+    public char getLetter() {
+        return letter;
+    }
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
     }
 
 }

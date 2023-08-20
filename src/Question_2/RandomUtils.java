@@ -23,4 +23,11 @@ public class RandomUtils {
         return rand.nextInt(max - min + 1) + min;
     }
 
+    public static int getRandomX(){
+        return getRandomIntInRange(0, 79) * 10;
+    }
+    public static int getRandomY(){
+        return getRandomIntInRange(0, 79) * 10;
+    }
+
 }
