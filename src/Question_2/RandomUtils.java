@@ -24,10 +24,10 @@ public class RandomUtils {
     }
 
     public static int getRandomX(){
-        return getRandomIntInRange(0, 79) * 10;
+        return getRandomIntInRange(0, 700);
     }
     public static int getRandomY(){
-        return getRandomIntInRange(0, 79) * 10;
+        return getRandomIntInRange(0, 700);
     }
 
 }

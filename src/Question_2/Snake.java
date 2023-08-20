@@ -31,15 +31,7 @@ public class Snake {
         this.speed = 400;
         this.timer = speed;
 
-        if (head == null) {
-            head = new SnakeBody(init_snake.charAt(0), x, y);
-        } else {
-            head.setBody('@');
-            head.setX(x);
-            head.setY(y);
-        }
-
-        for (int i = 1; i < init_snake.length(); i++) {
+        for (int i = 0; i < init_snake.length(); i++) {
             eat(new SnakeBody(init_snake.charAt(i)));
         }
 
@@ -73,44 +65,37 @@ public class Snake {
         }
 
         // move the body
-        SnakeBody currentBody = head;
         int prevX = head.getX();
         int prevY = head.getY();
+
+        SnakeBody currentBody = head.getNext();
         while (currentBody != null) {
-            
+
             int tempX = currentBody.getX();
             int tempY = currentBody.getY();
-            
+
             currentBody.setX(prevX);
             currentBody.setY(prevY);
-            
+
             prevX = tempX;
             prevY = tempY;
-            
+
             currentBody = currentBody.getNext();
         }
     }
 
     public void eat(SnakeBody food) {
         // add a new body at the end of snake body
-        SnakeBody tail = this.getTail();
-        tail.setNext(food);
-        food.setPrev(tail);
-        food.setX(tail.getX());
-        food.setY(tail.getY());
-        this.size++;
-    }
-
-    public SnakeBody getTail() {
-        return this.getTail(head);
-    }
-
-    private SnakeBody getTail(SnakeBody node) {
-        if (node.getNext() == null) {
-            return node;
+        if (head == null) {
+            head = food;
         } else {
-            return this.getTail(node.getNext());
+            SnakeBody tail = this.getTail();
+            tail.setNext(food);
+            food.setPrev(tail);
+            food.setX(tail.getX());
+            food.setY(tail.getY());
         }
+        this.size++;
     }
 
     public void hitsNumber(int number) {
@@ -120,6 +105,39 @@ public class Snake {
         } else {
             // remove the body at index number
             this.removeByIndex(head, number);
+        }
+    }
+
+    public void setBounder() {
+        // set the bounder for snake, if snake hits the bounder it goes to the other
+        // side
+        // get bounder
+        if (head.getX() > 790) {
+            head.setX(0);
+        }
+        if (head.getX() < 0) {
+            head.setX(790);
+        }
+        if (head.getY() > 790) {
+            head.setY(0);
+        }
+        if (head.getY() < 0) {
+            head.setY(790);
+        }
+    }
+
+    // snake methods until here.
+    // ------------------------------------
+    // linked list methods from here:
+    public SnakeBody getTail() {
+        return this.getTail(head);
+    }
+
+    private SnakeBody getTail(SnakeBody node) {
+        if (node.getNext() == null) {
+            return node;
+        } else {
+            return this.getTail(node.getNext());
         }
     }
 
@@ -141,24 +159,6 @@ public class Snake {
             tail.getPrev().setNext(null);
             tail.setPrev(null);
             size--;
-        }
-    }
-
-    public void setBounder() {
-        // set the bounder for snake, if snake hits the bounder it goes to the other
-        // side
-        // get bounder
-        if (head.getX() > 790) {
-            head.setX(0);
-        }
-        if (head.getX() < 0) {
-            head.setX(790);
-        }
-        if (head.getY() > 790) {
-            head.setY(0);
-        }
-        if (head.getY() < 0) {
-            head.setY(790);
         }
     }
 

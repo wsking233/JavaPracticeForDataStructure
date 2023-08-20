@@ -19,16 +19,16 @@ public class Panel extends JPanel implements KeyListener{
     
     private Snake snake;
     private SnakeBody food;
-    private int[] numbers;
+    private SnakeBody[] numbers;
     
 
 
     public Panel()
     {    
-        //init snake
+        //init snake 
         this.snake = new Snake("@abcd", 100, 100);
         this.food = randomFood();
-        this.numbers = new int[10];
+        this.numbers = new SnakeBody[10];
         randomNumbers();
     }
     
@@ -48,7 +48,7 @@ public class Panel extends JPanel implements KeyListener{
         g.drawString(String.valueOf(food.getBody()), food.getX(), food.getY());
 
         //draw the numbers
-        drawNumbers(g);
+        // drawNumbers(g);
         // g.drawString(String.valueOf(this.numbers[0]), RandomUtils.getRandomX(), RandomUtils.getRandomY());
 
         //HUI: score and snake body info
@@ -60,11 +60,11 @@ public class Panel extends JPanel implements KeyListener{
 
     public void drawNumbers(Graphics g){
         //draw the numbers
-       if(numbers.length < 10){
-           for(int i = 0; i < 10; i++){
-               g.drawString(String.valueOf(this.numbers[i]), RandomUtils.getRandomX(), RandomUtils.getRandomY());
-           }
-       }
+    //    if(numbers.length < 10){
+    //        for(int i = 0; i < 10; i++){
+    //            g.drawString(String.valueOf(this.numbers[i]), RandomUtils.getRandomX(), RandomUtils.getRandomY());
+    //        }
+    //    }
     }
 
     public void drawSnake(Graphics g){
@@ -72,7 +72,7 @@ public class Panel extends JPanel implements KeyListener{
         SnakeBody body = this.snake.getHead();
      
         while(body != null){
-            g.drawString(String.valueOf(body.getBody()), body.getX(), body.getY());
+            g.drawString(body.toString(), body.getX(), body.getY());
             body = body.getNext();
         }
     }
@@ -80,7 +80,7 @@ public class Panel extends JPanel implements KeyListener{
     public void drawHUI(Graphics g){
         //draw the score and snake body info
         g.drawString("Score: " + String.valueOf(snake.getScore()), 700, 50);
-        g.drawString("Snake body:"+snake.toString(), 100, 700);
+        g.drawString("Snake body:"+snake.toString(), 50, 50);
     }
 
     public SnakeBody randomFood(){
@@ -106,11 +106,10 @@ public class Panel extends JPanel implements KeyListener{
     public void randomNumbers(){
         //generate a random number
         // System.out.println("random number: " + this.numbers);
-        this.numbers = new int[10];
         System.out.print("The numbers are: ");
         for(int i = 0; i < 10; i++){
-            this.numbers[i] = (int)(Math.random() * 10);
-            System.out.print(numbers[i] + " ");
+            this.numbers[i].setBody((char)(Math.random() * 10 + '0'));
+            System.out.print(String.valueOf(numbers[i].getBody()) + " ");
         }
     }
 
