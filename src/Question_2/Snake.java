@@ -19,6 +19,9 @@ public class Snake {
     
     private LinkedList<SnakeBody> snake;
     private int dircetion;
+    private int score;
+    private int speed;
+    private int timer;
     
     public Snake(String init_snake, int x, int y)
     {
@@ -28,11 +31,23 @@ public class Snake {
         for(int i = 0; i < init_snake.length(); i++){
             snake.add(new SnakeBody(init_snake.charAt(i), x + i * 10, y));
         }
-    }       
+        this.score = 0;
+        this.speed = 200;
+        this.timer = speed;
+    }
 
-    public void run()
-    {
+    public void run(){
         //move the snake
+        if(timer == 0){
+            timer = speed;
+            move();
+        }else{
+            timer--;
+        }
+    }
+
+    public void move()
+    {
         //move the head
         SnakeBody head = this.snake.getFirst();
         switch(this.dircetion){
@@ -53,11 +68,39 @@ public class Snake {
         for(int i = 1; i < snake.size(); i++){
             SnakeBody body = snake.get(i);
             SnakeBody preBody = snake.get(i-1);
+                    setBounder();
+
             body.setX(preBody.getX());
             body.setY(preBody.getY());
         }
         
     } 
+
+    public void setBounder(){
+        //set the bounder for snake, if snake hits the bounder it goes to the other side
+        SnakeBody head = this.snake.getFirst();
+        //get bounder
+        if(head.getX() > 790){  //the 
+            head.setX(0);
+        }
+        if(head.getX() < 0){
+            head.setX(790);
+        }
+        if(head.getY() > 790){
+            head.setY(0);
+        }
+        if(head.getY() < 0){
+            head.setY(790);
+        }
+    }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+    public int getSpeed(){
+        return this.speed;
+    }
     
     public void setDircetion(int dircetion){
         this.dircetion = dircetion;
@@ -68,6 +111,7 @@ public class Snake {
         SnakeBody last = this.snake.getLast();
         SnakeBody newBody = new SnakeBody(food, last.getX(), last.getY());
         this.snake.add(newBody);
+        this.score++;
     }
     
     public void hitsNumber(int number){
@@ -78,6 +122,10 @@ public class Snake {
             //remove the last body
             this.snake.removeLast();
         }
+    }
+
+    public int getScore(){
+        return this.score;
     }
     
     public int getLength(){

@@ -29,13 +29,13 @@ public class SnakeGame {
         frame.setBackground(Color.BLACK);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        
+
         //init game panel
         Panel panel = new Panel();
         panel.setPreferredSize(new Dimension(800, 800));
         panel.setBackground(Color.gray);
-        panel.setFocusable(true);
-        panel.requestFocusInWindow();
+        // panel.setFocusable(true);
+        // panel.requestFocusInWindow();  
 
         //add panel to frame
         frame.add(panel);

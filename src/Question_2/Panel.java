@@ -43,18 +43,55 @@ public class Panel extends JPanel implements KeyListener{
     {
         paintComponent(g);
 
-        //draw each body of the snake
+        //draw the snake
         SnakeBody body = this.snake.getHead();
         while(body != null){
-            g.drawString(body.toString(), body.getX(), body.getY());
-            body = body.getNext();
-        }          
+            g.drawString(String.valueOf(body.getBody()), body.getX(), body.getY());
 
-        repaint();
+            body = body.getNext();
+        }
+
+        g.drawRect(snake.getHead().getX(), snake.getHead().getY(), 10, 10);
+
+        g.drawString(String.valueOf(this.food), this.foodx, this.foody);
+
+        //HUI: score and snake body info
+        g.drawString("Score: " + String.valueOf(snake.getScore()), 700, 50);
+        g.drawString(snake.toString(), 100, 700);
+
+        snake.run();
+        updateUI();
     }
 
-    public void draw(Graphics g){
-        //draw the snake
+    public void drawSnakeBody(Graphics g){
+        //put each snake body into a reactangle
+        SnakeBody body = this.snake.getHead();
+        while(body != null){
+            g.drawRect(body.getX(), body.getY(), 10, 10);
+
+            body = body.getNext();
+        }
+        
+        
+    }
+
+    public void randomFood(){
+        //generate a random food
+        // System.out.println("random food: " + this.food);
+        this.food = (char)('a' + (int)(Math.random() * 26));
+        this.foodx = (int)(Math.random() * 80) * 10;
+        this.foody = (int)(Math.random() * 80) * 10;
+    }
+
+    public void collisionDectect(){
+
+        //detect collision with food
+        SnakeBody head = this.snake.getHead();
+        if(head.getX() == this.foodx && head.getY() == this.foody){
+            //eat the food
+            this.snake.eat(this.food);
+            randomFood();
+        }
     }
 
 
@@ -62,13 +99,14 @@ public class Panel extends JPanel implements KeyListener{
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+       
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
-        // System.out.println(e.getKeyCode());
+         // System.out.println(e.getKeyCode());
         switch(e.getKeyCode()){
             case 37: //left
                 // System.out.println("left");
