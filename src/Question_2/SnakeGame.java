@@ -41,9 +41,6 @@ public class SnakeGame {
         frame.add(panel);
         frame.addKeyListener(panel);
         frame.setVisible(true);
-
-   
-        // Snake snake = new Snake("abcd", 100, 100);
     
         // System.out.println(snake.toString());
     }

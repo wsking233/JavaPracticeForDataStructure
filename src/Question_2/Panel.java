@@ -51,8 +51,8 @@ public class Panel extends JPanel implements KeyListener{
         // drawNumbers(g);
         // g.drawString(String.valueOf(this.numbers[0]), RandomUtils.getRandomX(), RandomUtils.getRandomY());
 
-        //HUI: score and snake body info
-        drawHUI(g);
+        //HUD: score and snake body info
+        drawHUD(g);
 
         snake.run();
         repaint();
@@ -77,7 +77,7 @@ public class Panel extends JPanel implements KeyListener{
         }
     }
 
-    public void drawHUI(Graphics g){
+    public void drawHUD(Graphics g){
         //draw the score and snake body info
         g.drawString("Score: " + String.valueOf(snake.getScore()), 700, 50);
         g.drawString("Snake body:"+snake.toString(), 50, 50);
@@ -115,8 +115,14 @@ public class Panel extends JPanel implements KeyListener{
 
     public void collisionDectect(){
         //detect if the snake hits the food
-        if(this.snake.getHead().getX() == this.food.getX() && this.snake.getHead().getY() == this.food.getY()){
-            System.out.println("hit food");
+//        if(this.snake.getHead().getX() == this.food.getX() && this.snake.getHead().getY() == this.food.getY()){
+//            System.out.println("hit food");
+//            this.snake.eat(food);
+//            randomFood();
+//        }
+        
+        if(this.snake.getHead().getLocation().equals(this.food.getLocation())){
+            System.out.println("hit food: " + this.food.getBody());
             this.snake.eat(food);
             randomFood();
         }

@@ -1,5 +1,7 @@
 package Question_2;
 
+import java.awt.Point;
+
 
 /*
 *  @author William Wang
@@ -17,8 +19,9 @@ public class SnakeBody {
     private char body;
     private SnakeBody next;
     // the x and y coordinates of the body
-    private int x;
-    private int y;
+//    private int x;
+//    private int y;
+    private Point location;
 
     public SnakeBody(char body){
         this.body = body;
@@ -26,8 +29,11 @@ public class SnakeBody {
 
     public SnakeBody(char body, int x, int y) {
         this.body = body;
-        this.x = x;
-        this.y = y;
+        this.location.x = x;
+        this.location.y = y;
+//        this.x = x;
+//        this.y = y;
+       
     }
 
     public SnakeBody getPrev() {
@@ -55,19 +61,29 @@ public class SnakeBody {
     }
 
     public void setX(int i) {
-        this.x = i;
+//        this.x = i;
+        this.location.x = i;
     }
 
     public void setY(int i) {
-        this.y = i;
+//        this.y = i;
+        this.location.y = i;
+    }
+    
+    public void setLocation(int x, int y){
+        this.location.x = x;
+        this.location.y = y;
     }
     
     public int getX() {
-        return x;
+        return this.location.x;
     }
 
     public int getY() {
-        return y;
+        return this.location.y;
+    }
+    public Point getLocation(){
+        return this.location;
     }
 
     public String toString() {

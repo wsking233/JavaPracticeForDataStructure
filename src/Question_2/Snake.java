@@ -48,23 +48,7 @@ public class Snake {
     }
 
     public void move() {
-        // move the head
-        switch (this.direction) {
-            case 0: // right
-                head.setX(head.getX() + 10);
-                break;
-            case 1: // left
-                head.setX(head.getX() - 10);
-                break;
-            case 2: // up
-                head.setY(head.getY() - 10);
-                break;
-            case 3: // down
-                head.setY(head.getY() + 10);
-                break;
-        }
-
-        // move the body
+        //make body follow the prev node;
         int prevX = head.getX();
         int prevY = head.getY();
 
@@ -81,6 +65,21 @@ public class Snake {
             prevY = tempY;
 
             currentBody = currentBody.getNext();
+        }
+         // move the head
+         switch (this.direction) {
+            case 0: // right
+                head.setX(head.getX() + 10);
+                break;
+            case 1: // left
+                head.setX(head.getX() - 10);
+                break;
+            case 2: // up
+                head.setY(head.getY() - 10);
+                break;
+            case 3: // down
+                head.setY(head.getY() + 10);
+                break;
         }
     }
 
