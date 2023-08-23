@@ -45,7 +45,7 @@ public class Panel extends JPanel implements KeyListener{
         drawSnake(g);
         // g.drawString(snake.getHead().getNext().toString(), snake.getHead().getNext().getX() , snake.getHead().getNext().getY());
         //draw the food
-        g.drawString(String.valueOf(food.getBody()), food.getX(), food.getY());
+        g.drawString(String.valueOf(food.getBody()), food.getLocation().x, food.getLocation().y);
 
         //draw the numbers
         // drawNumbers(g);
@@ -72,7 +72,7 @@ public class Panel extends JPanel implements KeyListener{
         SnakeBody body = this.snake.getHead();
      
         while(body != null){
-            g.drawString(body.toString(), body.getX(), body.getY());
+            g.drawString(body.toString(), body.getLocation().x, body.getLocation().y);
             body = body.getNext();
         }
     }

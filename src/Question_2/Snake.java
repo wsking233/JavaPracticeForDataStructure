@@ -7,8 +7,8 @@ package Question_2;
 //import Question_1.LinkedList;
 
 //import Question_1.Node;
-
-import java.util.LinkedList;
+//import java.util.LinkedList;
+import java.awt.Point;
 
 /**
  *
@@ -49,36 +49,45 @@ public class Snake {
 
     public void move() {
         //make body follow the prev node;
-        int prevX = head.getX();
-        int prevY = head.getY();
+//        int prevX = head.getX();
+//        int prevY = head.getY();
+
+        Point prevPoint = head.getLocation();
 
         SnakeBody currentBody = head.getNext();
         while (currentBody != null) {
+//
+//            int tempX = currentBody.getX();
+//            int tempY = currentBody.getY();
 
-            int tempX = currentBody.getX();
-            int tempY = currentBody.getY();
+            Point tempLocation = currentBody.getLocation();
 
-            currentBody.setX(prevX);
-            currentBody.setY(prevY);
+            currentBody.setLocation(prevPoint.x, prevPoint.y);
+//            currentBody.setX(prevX);
+//            currentBody.setY(prevY);
 
-            prevX = tempX;
-            prevY = tempY;
+            prevPoint = tempLocation;
+//            prevX = tempX;
+//            prevY = tempY;
 
             currentBody = currentBody.getNext();
         }
-         // move the head
-         switch (this.direction) {
+        // move the head
+        switch (this.direction) {
             case 0: // right
-                head.setX(head.getX() + 10);
+                head.setLocation(head.getLocation().x + 10, head.getLocation().y);
                 break;
             case 1: // left
-                head.setX(head.getX() - 10);
+                head.setLocation(head.getLocation().x - 10, head.getLocation().y);
+//                head.setX(head.getX() - 10);
                 break;
             case 2: // up
-                head.setY(head.getY() - 10);
+                head.setLocation(head.getLocation().x, head.getLocation().y - 10);
+//                head.setY(head.getY() - 10);
                 break;
             case 3: // down
-                head.setY(head.getY() + 10);
+                head.setLocation(head.getLocation().x, head.getLocation().y + 10);
+//                head.setY(head.getY() + 10);
                 break;
         }
     }
@@ -91,8 +100,9 @@ public class Snake {
             SnakeBody tail = this.getTail();
             tail.setNext(food);
             food.setPrev(tail);
-            food.setX(tail.getX());
-            food.setY(tail.getY());
+//            food.setLocation(tail.getLocation().x, tail.getLocation().y);
+//            food.setX(tail.getX());
+//            food.setY(tail.getY());
         }
         this.size++;
     }
@@ -111,17 +121,27 @@ public class Snake {
         // set the bounder for snake, if snake hits the bounder it goes to the other
         // side
         // get bounder
-        if (head.getX() > 790) {
-            head.setX(0);
+//        if (head.getX() > 790) 
+        if (head.getLocation().x > 780) {
+            head.setLocation(20, head.getLocation().y);
+//            head.setX(0);
         }
-        if (head.getX() < 0) {
-            head.setX(790);
+//        if (head.getX() < 0)
+        if (head.getLocation().x < 20) {
+            head.setLocation(780, head.getLocation().y);
+
+//            head.setX(790);
         }
-        if (head.getY() > 790) {
-            head.setY(0);
+//        if (head.getY() > 790) 
+            if(head.getLocation().y > 780)
+        {
+             head.setLocation(head.getLocation().x, 20);
+
+//            head.setY(0);
         }
-        if (head.getY() < 0) {
-            head.setY(790);
+        if (head.getLocation().y < 0) {
+            head.setLocation(head.getLocation().x, 780);
+//            head.setY(790);
         }
     }
 

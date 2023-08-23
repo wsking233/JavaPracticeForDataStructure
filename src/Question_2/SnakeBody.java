@@ -60,28 +60,11 @@ public class SnakeBody {
         this.next = next;
     }
 
-    public void setX(int i) {
-//        this.x = i;
-        this.location.x = i;
-    }
-
-    public void setY(int i) {
-//        this.y = i;
-        this.location.y = i;
-    }
-    
     public void setLocation(int x, int y){
         this.location.x = x;
         this.location.y = y;
     }
     
-    public int getX() {
-        return this.location.x;
-    }
-
-    public int getY() {
-        return this.location.y;
-    }
     public Point getLocation(){
         return this.location;
     }
