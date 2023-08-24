@@ -111,13 +111,12 @@ public class Snake {
         int index = Integer.parseInt(String.valueOf(number.getBody()));
         System.out.println("index is: " + index);
         
-        if (index >= this.size - 1) {
+        if(index <= 0 || index >= size){
             this.removeFromTail();
-        } else {
-            // remove the body at index number
-            this.remove(index);
+        }else{
+            this.remove(index --);
         }
-        this.size--;
+        
     }
 
     public void setBounder() {
@@ -155,7 +154,7 @@ public class Snake {
 
     public void remove(int position) {
         // remove the body at index number
-        if(position > size){
+        if(position > size -1){
             removeFromTail();
         }else{
             this.removeByIndex(head, position);
@@ -165,9 +164,12 @@ public class Snake {
     private void removeByIndex(SnakeBody node, int position) {
         // remove the body at index number
         if (position > 0) {
-            this.removeByIndex(head.getNext(), --position);
+            this.removeByIndex(node.getNext(), --position);
         } else {
-            head.setNext(head.getNext().getNext());
+            // remove the node
+            node.getPrev().setNext(node.getNext());
+            node.getNext().setPrev(node.getPrev());
+            
         }
     }
 
