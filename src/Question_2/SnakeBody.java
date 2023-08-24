@@ -15,26 +15,20 @@ import java.awt.Point;
 public class SnakeBody {
 
     // the previous and next body of the snake
-    private SnakeBody prev;
     private char body;
+    private SnakeBody prev;
     private SnakeBody next;
-    // the x and y coordinates of the body
-//    private int x;
-//    private int y;
-    private Point location;
+    private Point location;     // the location of the body
 
     public SnakeBody(char body){
         this.body = body;
     }
-
-    public SnakeBody(char body, int x, int y) {
+    
+    public SnakeBody(char body, Point location){
         this.body = body;
-        this.location.x = x;
-        this.location.y = y;
-//        this.x = x;
-//        this.y = y;
-       
+        this.location = location;
     }
+
 
     public SnakeBody getPrev() {
         return prev;
@@ -59,33 +53,28 @@ public class SnakeBody {
     public void setNext(SnakeBody next) {
         this.next = next;
     }
-
-    public void setX(int i) {
-//        this.x = i;
-        this.location.x = i;
-    }
-
-    public void setY(int i) {
-//        this.y = i;
-        this.location.y = i;
-    }
     
     public void setLocation(int x, int y){
         this.location.x = x;
         this.location.y = y;
     }
+    public void setLocation(Point point){
+        this.location = point;
+    }
     
-    public int getX() {
-        return this.location.x;
+    public void setX(int x){
+        this.location.x = x;
     }
-
-    public int getY() {
-        return this.location.y;
+    
+    public void setY(int y){
+        this.location.y = y;
     }
+    
     public Point getLocation(){
         return this.location;
     }
 
+    @Override
     public String toString() {
         return String.valueOf(this.body);
     }

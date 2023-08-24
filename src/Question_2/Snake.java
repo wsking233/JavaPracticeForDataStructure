@@ -7,8 +7,7 @@ package Question_2;
 //import Question_1.LinkedList;
 
 //import Question_1.Node;
-
-import java.util.LinkedList;
+import java.awt.Point;
 
 /**
  *
@@ -28,13 +27,15 @@ public class Snake {
         this.direction = 0;
         this.size = 0;
         this.score = 0;
-        this.speed = 400;
+        this.speed = 300;
         this.timer = speed;
 
-        for (int i = 0; i < init_snake.length(); i++) {
-            eat(new SnakeBody(init_snake.charAt(i)));
-        }
+        this.head = new SnakeBody(init_snake.charAt(0), new Point(x, y));
 
+        for (int i = 1; i < init_snake.length(); i++) {
+            this.eat(new SnakeBody(init_snake.charAt(i)));
+            this.score--;    //init score to 0
+        }
     }
 
     public void run() {
@@ -48,39 +49,45 @@ public class Snake {
     }
 
     public void move() {
-        //make body follow the prev node;
-        int prevX = head.getX();
-        int prevY = head.getY();
+        // System.out.println("the head location is: " + head.getLocation());
 
+        // make body follow the prev node;
+        // Point prevLocation = head.getLocation();
+        Point prevLocation = new Point(head.getLocation());
         SnakeBody currentBody = head.getNext();
         while (currentBody != null) {
+            // Point tempLocation = currentBody.getLocation();
+            Point tempLocation = new Point(currentBody.getLocation());
 
-            int tempX = currentBody.getX();
-            int tempY = currentBody.getY();
-
-            currentBody.setX(prevX);
-            currentBody.setY(prevY);
-
-            prevX = tempX;
-            prevY = tempY;
+            currentBody.setLocation(prevLocation);
+            prevLocation = tempLocation;
 
             currentBody = currentBody.getNext();
         }
-         // move the head
-         switch (this.direction) {
+
+        // move the head
+        switch (this.direction) {
             case 0: // right
-                head.setX(head.getX() + 10);
+                // head.setX(head.getX() + 10);
+                head.setLocation(head.getLocation().x + 10, head.getLocation().y);
                 break;
             case 1: // left
-                head.setX(head.getX() - 10);
+                // head.setX(head.getX() - 10);
+                head.setLocation(head.getLocation().x - 10, head.getLocation().y);
+
                 break;
             case 2: // up
-                head.setY(head.getY() - 10);
+                // head.setY(head.getY() - 10);
+                head.setLocation(head.getLocation().x, head.getLocation().y - 10);
+
                 break;
             case 3: // down
-                head.setY(head.getY() + 10);
+                // head.setY(head.getY() + 10);
+                head.setLocation(head.getLocation().x, head.getLocation().y + 10);
+
                 break;
         }
+
     }
 
     public void eat(SnakeBody food) {
@@ -91,36 +98,42 @@ public class Snake {
             SnakeBody tail = this.getTail();
             tail.setNext(food);
             food.setPrev(tail);
-            food.setX(tail.getX());
-            food.setY(tail.getY());
+            food.setLocation(tail.getLocation());
+
         }
+
+        this.score++;
         this.size++;
     }
 
-    public void hitsNumber(int number) {
+    public void hitsNumber(SnakeBody number) {
         // remove the Tail if the number bigger than length of snake
-        if (number > this.size || number <= 0) {
+        int index = Integer.parseInt(String.valueOf(number.getBody()));
+        System.out.println("index is: " + index);
+        
+        if (index >= this.size - 1) {
             this.removeFromTail();
         } else {
             // remove the body at index number
-            this.removeByIndex(head, number);
+            this.remove(index);
         }
+        this.size--;
     }
 
     public void setBounder() {
         // set the bounder for snake, if snake hits the bounder it goes to the other
         // side
         // get bounder
-        if (head.getX() > 790) {
+        if (head.getLocation().x > 790) {
             head.setX(0);
         }
-        if (head.getX() < 0) {
+        if (head.getLocation().x < 0) {
             head.setX(790);
         }
-        if (head.getY() > 790) {
+        if (head.getLocation().y > 790) {
             head.setY(0);
         }
-        if (head.getY() < 0) {
+        if (head.getLocation().y < 0) {
             head.setY(790);
         }
     }
@@ -140,16 +153,25 @@ public class Snake {
         }
     }
 
+    public void remove(int position) {
+        // remove the body at index number
+        if(position > size){
+            removeFromTail();
+        }else{
+            this.removeByIndex(head, position);
+        }
+    }
+
     private void removeByIndex(SnakeBody node, int position) {
+        // remove the body at index number
         if (position > 0) {
             this.removeByIndex(head.getNext(), --position);
         } else {
             head.setNext(head.getNext().getNext());
-            size--;
         }
     }
 
-    public void removeFromTail() {
+    private void removeFromTail() {
         // remove the tail
         if (head == null) {
             size = 0;
@@ -157,7 +179,6 @@ public class Snake {
             SnakeBody tail = this.getTail();
             tail.getPrev().setNext(null);
             tail.setPrev(null);
-            size--;
         }
     }
 
