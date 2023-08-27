@@ -21,10 +21,11 @@ public class ShipDemo {
         JFrame frame = new JFrame("Java Paint");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel panel = new Panel();
-        
         frame.getContentPane().add(panel);
         frame.setSize(1000, 1050);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
     }
     
 }
