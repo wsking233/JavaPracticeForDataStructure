@@ -20,49 +20,19 @@ package Question_3;
  *
  * @author xhu
  */
-public class Ship implements Runnable {
+public class Ship{
     int x;
     int y;
     String name = "Ship";
-    Port target;
-    boolean arrived = false;
-
-    public Ship(int x, int y, Port port) {
+    
+    public Ship(int x, int y, Port port)
+    {
         this.x = x;
         this.y = y;
-        this.target = port;
-    }
-
-    public void move() {
-        // move the ship to the port
-        if (this.x < target.x) {
-            this.x++;
-        } else if (this.x > target.x) {
-            this.x--;
-        }
-        // if (this.y < target.y) {
-        //     this.y++;
-        // } else if (this.y > target.y) {
-        //     this.y--;
-        // }
-
-    }
-
-    @Override
-    public void run() {
-        while (!arrived) {
-            move();
-            System.out.println("Thread: " + Thread.currentThread().getName() + " is running");
-            if(x == target.x && y == target.y){
-                Thread.currentThread().interrupt();
-                arrived = true;
-            }
-
-            // try {
-            //     Thread.sleep(100);
-            // } catch (InterruptedException e) {
-            //     System.out.println(e.getMessage());
-            // }
-        }
+    }   
+    
+    public void move()
+    {
+        
     }
 }
