@@ -4,6 +4,7 @@
  */
 package Question_2;
 
+import java.awt.Point;
 import java.util.Random;
 
 /**
@@ -12,22 +13,28 @@ import java.util.Random;
  */
 public class RandomUtils {
 
-    private static final Random rand = new Random();
+    private static final Random RAND = new Random();
+    private static final int MAX_SIZE = 700;
 
     public static int getRandomInt(int bound) {
-        
-        return rand.nextInt(bound);
+
+        return RAND.nextInt(bound);
+    }
+
+    public static Point getRandomPoint() {
+        int x = getRandomIntInRange(0, MAX_SIZE);
+        int y = getRandomIntInRange(0, MAX_SIZE);
+        Point point = new Point(x, y);
+        return point;
     }
 
     public static int getRandomIntInRange(int min, int max) {
-        return rand.nextInt(max - min + 1) + min;
+        int randomNumberInRange = RAND.nextInt(max - min + 1) + min;
+        return roundToNearestMultipleOfTen(randomNumberInRange);
     }
 
-    public static int getRandomX(){
-        return getRandomIntInRange(0, 700);
-    }
-    public static int getRandomY(){
-        return getRandomIntInRange(0, 700);
+    private static int roundToNearestMultipleOfTen(int number) {
+        return (int) Math.round(number / 10.0) * 10;
     }
 
 }
