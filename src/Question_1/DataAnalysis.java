@@ -5,7 +5,6 @@
  */
 package Question_1;
 
-import java.util.Arrays;
 
 /**
  *
