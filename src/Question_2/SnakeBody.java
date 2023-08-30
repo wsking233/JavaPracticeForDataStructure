@@ -27,13 +27,9 @@ public class SnakeBody {
         this.body = body;
     }
 
-    public SnakeBody(char body, int x, int y) {
+    public SnakeBody(char body, Point location){
         this.body = body;
-        this.location.x = x;
-        this.location.y = y;
-//        this.x = x;
-//        this.y = y;
-       
+        this.location = location;
     }
 
     public SnakeBody getPrev() {

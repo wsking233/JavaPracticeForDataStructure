@@ -6,6 +6,7 @@
 package Question_2;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -27,8 +28,8 @@ public class Panel extends JPanel implements KeyListener{
     {    
         //init snake 
         this.snake = new Snake("@abcd", 100, 100);
-        this.food = randomFood();
         this.numbers = new SnakeBody[10];
+        randomFood();
 //        randomNumbers();
     }
     
@@ -83,7 +84,7 @@ public class Panel extends JPanel implements KeyListener{
         g.drawString("Snake body:"+snake.toString(), 50, 50);
     }
 
-    public SnakeBody randomFood(){
+    public void randomFood(){
         //generate a random food
         // System.out.println("random food: " + this.food);
         char temp = 'a';
@@ -93,14 +94,15 @@ public class Panel extends JPanel implements KeyListener{
             temp = (char)(Math.random() * 26 + 'A');
         }
 
-        int x = RandomUtils.getRandomX();
-        int y = RandomUtils.getRandomY();
-        SnakeBody body = new SnakeBody(temp, x, y);
+
+        Point point = RandomUtils.getRandomPoint();
+
+        SnakeBody body = new SnakeBody(temp, point);
         // body.setNext(null);
         // body.setPrev(null);
         this.food = body;
 
-        return body;
+        // return body;
     }
 
     public void randomNumbers(){

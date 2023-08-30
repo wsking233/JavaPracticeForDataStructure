@@ -29,10 +29,5 @@ public class Ship{
     {
         this.x = x;
         this.y = y;
-    }   
-    
-    public void move()
-    {
-        
-    }
+    }    
 }

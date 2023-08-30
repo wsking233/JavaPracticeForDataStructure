@@ -107,41 +107,36 @@ public class Snake {
         this.size++;
     }
 
-    public void hitsNumber(int number) {
+    public void hitsNumber(SnakeBody number) {
         // remove the Tail if the number bigger than length of snake
-        if (number > this.size || number <= 0) {
+        int index = Integer.parseInt(String.valueOf(number.getBody()));
+        System.out.println("index is: " + index);
+        
+        if (index >= this.size - 1) {
             this.removeFromTail();
         } else {
             // remove the body at index number
-            this.removeByIndex(head, number);
+            this.remove(index);
         }
+        this.size--;
     }
 
     public void setBounder() {
         // set the bounder for snake, if snake hits the bounder it goes to the other
-        // side
-        // get bounder
-//        if (head.getX() > 790) 
         if (head.getLocation().x > 780) {
             head.setLocation(20, head.getLocation().y);
-//            head.setX(0);
         }
-//        if (head.getX() < 0)
         if (head.getLocation().x < 20) {
             head.setLocation(780, head.getLocation().y);
 
-//            head.setX(790);
         }
-//        if (head.getY() > 790) 
             if(head.getLocation().y > 780)
         {
              head.setLocation(head.getLocation().x, 20);
 
-//            head.setY(0);
         }
         if (head.getLocation().y < 0) {
             head.setLocation(head.getLocation().x, 780);
-//            head.setY(790);
         }
     }
 
@@ -160,12 +155,20 @@ public class Snake {
         }
     }
 
+    public void remove(int position) {
+        // remove the body at index number
+        if(position > size){
+            removeFromTail();
+        }else{
+            this.removeByIndex(head, position);
+        }
+    }
+
     private void removeByIndex(SnakeBody node, int position) {
         if (position > 0) {
             this.removeByIndex(head.getNext(), --position);
         } else {
             head.setNext(head.getNext().getNext());
-            size--;
         }
     }
 
