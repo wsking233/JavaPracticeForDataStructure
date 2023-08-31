@@ -14,7 +14,7 @@ public class Port {
     int x;
     int y;
     String name = "Port";
-    boolean occupied = false;   //if a ship already arrived, occupied
+    boolean occupied;   //if a ship already arrived, occupied
     
     public Port(int x, int y)
     {
