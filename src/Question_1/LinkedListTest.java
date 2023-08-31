@@ -7,8 +7,8 @@ package Question_1;
 
 
 /**
- *
- * @author xhu
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class LinkedListTest {
     static final String ANSI_RED = "\u001B[31m";

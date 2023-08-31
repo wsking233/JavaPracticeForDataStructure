@@ -11,7 +11,8 @@ import java.awt.Point;
 
 /**
  *
- * @author xhu
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class Snake {
 

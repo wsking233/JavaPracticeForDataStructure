@@ -7,8 +7,8 @@ package Question_1;
 
 /**
  *
- * @author xhu
- * @param <E>
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class Stack <E extends Comparable<E>>{
     LinkedList<E> stack = new LinkedList<>();

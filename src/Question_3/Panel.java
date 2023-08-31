@@ -21,7 +21,8 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author xhu
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class Panel extends JPanel implements KeyListener, ActionListener {
 

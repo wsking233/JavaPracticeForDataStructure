@@ -4,8 +4,8 @@ import java.awt.Point;
 
 
 /*
-*  @author William Wang
-*
+ * @author William Wang
+ * @studnetID 18017970
 * this class is used to represent the body of the snake
 * it contains the body character, the x and y coordinates of the body
 * and the previous and next body

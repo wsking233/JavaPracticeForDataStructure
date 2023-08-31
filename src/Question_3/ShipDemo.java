@@ -9,7 +9,8 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author xhu
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class ShipDemo {
 

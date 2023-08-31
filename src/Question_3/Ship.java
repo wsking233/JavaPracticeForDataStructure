@@ -18,7 +18,8 @@ package Question_3;
 
 /**
  *
- * @author xhu
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class Ship implements Runnable {
     int x;

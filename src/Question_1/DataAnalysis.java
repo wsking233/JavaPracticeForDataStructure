@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 /**
  *
- * @author xhu
- * @param <E>
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class DataAnalysis <E extends Comparable<E>>{
     // private Queue<E> queue = new Queue();

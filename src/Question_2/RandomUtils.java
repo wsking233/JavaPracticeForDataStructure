@@ -8,8 +8,8 @@ import java.awt.Point;
 import java.util.Random;
 
 /**
- *
- * @author wskin
+ * @author William Wang
+ * @studnetID 18017970
  */
 public class RandomUtils {
 
