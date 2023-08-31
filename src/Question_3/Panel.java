@@ -10,19 +10,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
 /**
  *
  * @author xhu
  */
-public class Panel extends JPanel implements KeyListener {
+public class Panel extends JPanel implements KeyListener, ActionListener {
 
     int number_ship = 20;
     boolean program_starts = false;
@@ -33,9 +35,10 @@ public class Panel extends JPanel implements KeyListener {
     Image island_image;
     Image boat_island_image;
 
-    JToggleButton syncSwitch;
-    boolean sync = true;
+    // JToggleButton syncSwitch;
     Thread[] threads = new Thread[number_ship];
+    JButton syncButton = new JButton("Sync Mode");
+    JButton unyncButton = new JButton("Unsync Mode");
 
     public Panel() {
         this.addKeyListener(this);
@@ -47,73 +50,88 @@ public class Panel extends JPanel implements KeyListener {
 
             ships[i] = new Ship(20, i * 50, port);
             threads[i] = new Thread(ships[i]);
-            threads[i].start();
         }
 
         ship_image = new ImageIcon("boat.png").getImage();
         island_image = new ImageIcon("land.png").getImage();
         boat_island_image = new ImageIcon("boat_land.png").getImage();
 
-        // initialize the switch button
-        syncSwitch = new JToggleButton("Unsync/Sync");
-        syncSwitch.setSelected(false);
-
-        // add listeners to buttons
-        syncSwitch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchSync();
-            }
-        });
-
-        // add the switch to panel
-        this.setLayout(new BorderLayout());
-        this.add(syncSwitch, BorderLayout.SOUTH);
+        // initialize the buttons
+        syncButton.addActionListener(this);
+        unyncButton.addActionListener(this);
+        this.add(syncButton, BorderLayout.CENTER);
+        this.add(unyncButton, BorderLayout.CENTER);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setFont(new Font("Monospaced", Font.BOLD, 20));
-        g.drawString("Type \"SPACE\" to start/pause game", 300, 50);
 
-        g.drawImage(island_image, port.x, port.y, this);
-    
-        // draw ships
-        for(Ship ship: ships){
+        // draw the ships
+        for (Ship ship : ships) {
             g.drawImage(ship_image, ship.x, ship.y, this);
         }
-
-        //start the threads
-        if (this.program_starts) {
-            for (int i = 0; i < number_ship; i++) {
-                if (sync) {
-                    synchronized (port) {
-                        port.notifyAll();
-                        try {
-                            port.wait();
-                        } catch (InterruptedException e) {
-                            System.out.println(e.getMessage());
-                        }
-
-                    }
-                } else {
-                    notifyAll();
-                }
-            }
+        // draw island
+        if (port.occupied) {
+            g.drawImage(boat_island_image, port.x, port.y, this);
+        } else {
+            g.drawImage(island_image, port.x, port.y, this);
         }
+
+        drawNotification();
+
+        // set button invisible after the game starts
+        hidButton();
 
         repaint();
     }
 
+    private void hidButton() {
+        if (program_starts) {
+            syncButton.setVisible(false);
+            unyncButton.setVisible(false);
+        } else {
+            syncButton.setVisible(true);
+            unyncButton.setVisible(true);
+        }
+    }
 
-    private void switchSync() { // switch the sync flag
-        this.sync = !this.sync;
+    public void drawNotification() {
+        // check if ships are crashed
+        for (int i = 0; i < number_ship; i++) {
+            for (int j = i + 1; j < number_ship; j++) {
+                if (ships[i].x == ships[j].x && ships[i].y == ships[j].y) {
+                    // draw notification when the ship is crashed
+                    this.getGraphics().setFont(new Font("Monospaced", Font.BOLD, 25));
+                    this.getGraphics().drawString("Crashed!", 300, 50);
+                }
+            }
+        }
+    }
+
+    private void startGame(boolean syncMode) {
+        for (int i = 0; i < number_ship; i++) {
+            ships[i].syncMode = syncMode;
+            threads[i].start();
+        }
+        program_starts = true;
+        // this.requestFocusInWindow(); // Set focus on the panel to receive key events
+        // if (!program_starts) {
+        // }
+    }
+
+    // button listener
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == syncButton) {
+            startGame(true);
+        } else if (e.getSource() == unyncButton) {
+            startGame(false);
+        }
     }
 
     @Override
     public void keyTyped(KeyEvent ke) { // switch the program_starts flag
         System.out.println("\"" + ke.getKeyChar() + "\" is typed.");
-        this.program_starts = !this.program_starts;
+        // this.program_starts = !this.program_starts;
     }
 
     @Override

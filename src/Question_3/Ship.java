@@ -6,11 +6,11 @@
 
 /* 
 Which object have you chosen as a monitor object to synchronize your code?
-
+Answer: I chose the port object as a monitor object.
 
 
 Why did you choose that object as a monitor oject to synchronize your code?
-
+Answer: Because there is only one port object instance, and all the ships need to reach the port.
 
 */
 
@@ -26,6 +26,7 @@ public class Ship implements Runnable {
     String name = "Ship";
     Port target;
     boolean arrived = false;
+    boolean syncMode = false;
 
     public Ship(int x, int y, Port port) {
         this.x = x;
@@ -33,36 +34,62 @@ public class Ship implements Runnable {
         this.target = port;
     }
 
+    @Override
+    public void run() {
+        System.out.println("Thread: " + Thread.currentThread().getName() + " is running");
+        if (syncMode) { // if sync mode is on, use synchronized block
+            synchronized (target) {
+                updateStatus();
+                // notifyAll();
+            }
+        } else {
+            updateStatus();
+        }
+
+        // move();
+        // release the port after the ship arrives
+        releasePort();
+    }
+
     public void move() {
         // move the ship to the port
-        if (this.x < target.x) {
-            this.x++;
-        } else if (this.x > target.x) {
-            this.x--;
+        while (x != target.x || y != target.y) {
+            if (this.x < target.x) {
+                this.x++;
+            } else if (this.x > target.x) {
+                this.x--;
+            }
+            if (this.y < target.y) {
+                this.y++;
+            } else if (this.y > target.y) {
+                this.y--;
+            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
         }
-        // if (this.y < target.y) {
-        //     this.y++;
-        // } else if (this.y > target.y) {
-        //     this.y--;
-        // }
+        this.arrived = true;
 
     }
 
-    @Override
-    public void run() {
-        while (!arrived) {
+    private void updateStatus() {
+        if (!this.arrived) {
+            this.target.occupied = false;
             move();
-            System.out.println("Thread: " + Thread.currentThread().getName() + " is running");
-            if(x == target.x && y == target.y){
-                Thread.currentThread().interrupt();
-                arrived = true;
-            }
-
-            // try {
-            //     Thread.sleep(100);
-            // } catch (InterruptedException e) {
-            //     System.out.println(e.getMessage());
-            // }
         }
+        this.target.occupied = true;
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void releasePort() {
+        this.target.occupied = false;
+        this.arrived = true;
     }
 }

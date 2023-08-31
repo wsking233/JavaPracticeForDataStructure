@@ -14,6 +14,7 @@ public class Port {
     int x;
     int y;
     String name = "Port";
+    boolean occupied = false;
     
     public Port(int x, int y)
     {
