@@ -28,6 +28,8 @@ public class Ship implements Runnable {
     boolean arrived = false;
     boolean syncMode = false;
 
+    static boolean shipMoving = false;
+
     public Ship(int x, int y, Port port) {
         this.x = x;
         this.y = y;
@@ -40,20 +42,20 @@ public class Ship implements Runnable {
         if (syncMode) { // if sync mode is on, use synchronized block
             synchronized (target) {
                 updateStatus();
-                // notifyAll();
             }
         } else {
             updateStatus();
         }
-
-        // move();
-        // release the port after the ship arrives
-        releasePort();
     }
 
     public void move() {
+        //before moving, check if the port is occupied
+        shipMoving = true;
+        this.target.occupied = false;
+        System.out.println(Thread.currentThread().getName() + " is moving");
+        
         // move the ship to the port
-        while (x != target.x || y != target.y) {
+        while (x != target.x || y != target.y) {    // if the ship has not arrived
             if (this.x < target.x) {
                 this.x++;
             } else if (this.x > target.x) {
@@ -65,31 +67,40 @@ public class Ship implements Runnable {
                 this.y--;
             }
             try {
-                Thread.sleep(10);
+                Thread.sleep(2);    //slow down the speed
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
-        this.arrived = true;
-
     }
 
-    private void updateStatus() {
-        if (!this.arrived) {
-            this.target.occupied = false;
-            move();
-        }
+    private void relasePort() {
+        // after the ship arrives
+        shipMoving = false;
+        this.arrived = true;
         this.target.occupied = true;
+        System.out.println(Thread.currentThread().getName() + " has arrived at the port");
+
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1000);     // wait for 1 sec when the ship arrives
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        // release the port after 1sec the ship arrives
+        this.target.occupied = false;
     }
 
-    private void releasePort() {
-        this.target.occupied = false;
-        this.arrived = true;
+    private void updateStatus() {
+
+        while (!this.arrived) { // if the ship has not arrived, keep moving
+            if (!shipMoving) { // check if other ships are moving
+                move();
+            }
+            if(x == target.x && y == target.y){
+                relasePort();
+            }
+        }
     }
 }

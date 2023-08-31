@@ -77,7 +77,7 @@ public class Panel extends JPanel implements KeyListener, ActionListener {
             g.drawImage(island_image, port.x, port.y, this);
         }
 
-        drawNotification();
+        drawNotification(g);
 
         // set button invisible after the game starts
         hidButton();
@@ -95,16 +95,29 @@ public class Panel extends JPanel implements KeyListener, ActionListener {
         }
     }
 
-    public void drawNotification() {
+    public void drawNotification(Graphics g) {
         // check if ships are crashed
-        for (int i = 0; i < number_ship; i++) {
+        int arrived_ship = 0;
+        for (int i = 0; i < number_ship; i++) { // first check if the ship is moving
             for (int j = i + 1; j < number_ship; j++) {
-                if (ships[i].x == ships[j].x && ships[i].y == ships[j].y) {
-                    // draw notification when the ship is crashed
-                    this.getGraphics().setFont(new Font("Monospaced", Font.BOLD, 25));
-                    this.getGraphics().drawString("Crashed!", 300, 50);
+                if (i != j && !ships[i].arrived && !ships[j].arrived) { // avoid checking the same ship, and the ships
+                                                                        // already arrived
+                    if (ships[i].x == ships[j].x && ships[i].y == ships[j].y) {
+                        // draw notification when the ship is crashed
+                        g.setFont(new Font("Monospaced", Font.BOLD, 30));
+                        g.drawString("Crashed!", ships[i].x, ships[i].y - 50);
+                    }
                 }
             }
+            if (ships[i].arrived) {
+                arrived_ship++;
+            }
+        }
+
+        // draw notification when all ships arrived
+        if (arrived_ship == number_ship) {
+            g.setFont(new Font("Monospaced", Font.BOLD, 30));
+            g.drawString("Game Over", 400, 500);
         }
     }
 
